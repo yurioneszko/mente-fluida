@@ -1,0 +1,1010 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mente Fluida — Psicanálise Online | Edemar Oneszko</title>
+  <meta name="description" content="Mente Fluida: psicanálise clínica com Edemar Oneszko (CNP 03/6188). Escuta profunda para ansiedade, compulsões, estresse e sofrimento psíquico. Atendimento online para todo o Brasil.">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,500&family=Lora:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
+
+  <style>
+    /* ============ FUNDAÇÃO ============ */
+    :root {
+      --creme: #F7F3EC;        /* 60% — fundo */
+      --creme-escuro: #EFE8DC; /* variação do neutro */
+      --marinho: #1B2A4A;      /* 30% — texto e blocos */
+      --marinho-profundo: #131E36;
+      --dourado: #B8963E;      /* 10% — destaque, só em CTAs e detalhes */
+      --dourado-claro: #D4B96A;
+      --texto: #2C3244;
+      --texto-suave: #5A6072;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    html { scroll-behavior: smooth; }
+
+    /* granulado cinematográfico sobre tudo, quase imperceptível */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      z-index: 300;
+      pointer-events: none;
+      opacity: 0.04;
+      background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
+    }
+
+    body {
+      font-family: 'Lora', serif;
+      font-size: 17px;
+      line-height: 1.7;
+      color: var(--texto);
+      background: var(--creme);
+      -webkit-font-smoothing: antialiased;
+    }
+
+    h1, h2, h3 { font-family: 'Playfair Display', serif; color: var(--marinho); line-height: 1.2; }
+
+    img { max-width: 100%; display: block; }
+
+    .container { width: min(1100px, 90%); margin: 0 auto; }
+
+    section { padding: 96px 0; }
+
+    .eyebrow {
+      font-family: 'Lora', serif;
+      font-size: 0.8rem;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--dourado);
+      font-weight: 500;
+      display: block;
+      margin-bottom: 20px;
+    }
+
+    /* animação de entrada (JS adiciona .visivel) — sobe suave e sai do desfoque */
+    .revelar {
+      opacity: 0;
+      transform: translateY(28px);
+      filter: blur(5px);
+      transition: opacity 0.9s cubic-bezier(0.22, 1, 0.36, 1),
+                  transform 0.9s cubic-bezier(0.22, 1, 0.36, 1),
+                  filter 0.9s ease;
+    }
+    .revelar.visivel { opacity: 1; transform: translateY(0); filter: blur(0); }
+
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      .revelar { opacity: 1; transform: none; filter: none; transition: none; }
+      .hero-fundo img, .hero-fundo video, .luz, .rolar-hint span { animation: none !important; }
+      body::before { display: none; }
+    }
+
+    /* ============ BOTÕES ============ */
+    .btn {
+      display: inline-block;
+      font-family: 'Lora', serif;
+      font-size: 1rem;
+      font-weight: 500;
+      text-decoration: none;
+      padding: 16px 36px;
+      min-height: 44px;
+      border-radius: 3px;
+      transition: background-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .btn-primario {
+      background: var(--dourado);
+      color: #fff;
+      box-shadow: 0 4px 18px rgba(184, 150, 62, 0.35);
+      position: relative;
+      overflow: hidden;
+    }
+    .btn-primario::after { /* brilho que atravessa o botão no hover */
+      content: '';
+      position: absolute;
+      top: 0; left: -80%;
+      width: 50%; height: 100%;
+      background: linear-gradient(100deg, transparent, rgba(255, 255, 255, 0.35), transparent);
+      transform: skewX(-20deg);
+      transition: left 0.6s ease;
+    }
+    .btn-primario:hover::after { left: 130%; }
+    .btn-primario:hover {
+      background: var(--dourado-claro);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(184, 150, 62, 0.45);
+    }
+
+    /* ============ HEADER ============ */
+    .header {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      padding: 20px 0;
+      transition: background-color 0.4s ease, box-shadow 0.4s ease, padding 0.4s ease;
+    }
+    .header.rolado {
+      background: rgba(247, 243, 236, 0.96);
+      box-shadow: 0 2px 20px rgba(19, 30, 54, 0.08);
+      padding: 12px 0;
+    }
+    .header-inner { display: flex; align-items: center; justify-content: space-between; }
+
+    .logo {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.2rem;
+      font-weight: 600;
+      color: var(--creme); /* branco sobre o herói escuro */
+      text-decoration: none;
+      letter-spacing: 0.02em;
+      transition: color 0.4s ease;
+    }
+    .logo span { color: var(--dourado-claro); transition: color 0.4s ease; }
+    .header.rolado .logo { color: var(--marinho); } /* escurece quando o fundo vira creme */
+    .header.rolado .logo span { color: var(--dourado); }
+
+    .header .btn { padding: 12px 24px; font-size: 0.9rem; }
+
+    /* ============ HERÓI — a entrada do consultório ============ */
+    /* o wrap é mais alto que a tela: o trecho extra de rolagem é a "travessia da porta" */
+    .hero-wrap { height: 175svh; }
+    .hero {
+      position: sticky;
+      top: 0;
+      height: 100svh;
+      display: flex;
+      align-items: center;
+      padding: 140px 0 80px;
+      background: var(--marinho-profundo);
+      overflow: hidden;
+    }
+    .hero-fundo {
+      position: absolute;
+      inset: 0;
+      /* fallback enquanto não há foto: luz quente entrando por uma "janela" */
+      background:
+        radial-gradient(ellipse 55% 65% at 78% 30%, rgba(212, 185, 106, 0.14), transparent 65%),
+        radial-gradient(ellipse 40% 50% at 15% 85%, rgba(27, 42, 74, 0.9), transparent 70%),
+        linear-gradient(165deg, #1A2440 0%, var(--marinho-profundo) 55%, #0D1526 100%);
+    }
+    .hero-fundo { will-change: transform; } /* o JS empurra a "câmera" para dentro na rolagem */
+    .hero-fundo img,
+    .hero-fundo video {
+      width: 100%; height: 100%;
+      object-fit: cover;
+      opacity: 0.45;
+      animation: respirar 26s ease-in-out infinite alternate; /* zoom lentíssimo, como respiração */
+      will-change: transform;
+    }
+    @keyframes respirar {
+      from { transform: scale(1); }
+      to   { transform: scale(1.07) translateY(-1.2%); }
+    }
+    .hero-fundo::after { /* vinheta que escurece a foto e protege o texto */
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(180deg, rgba(19, 30, 54, 0.5) 0%, rgba(19, 30, 54, 0.65) 55%, var(--marinho-profundo) 100%);
+    }
+    /* feixes de luz de abajur, flutuando devagar */
+    .luz {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(70px);
+      pointer-events: none;
+    }
+    .luz-1 {
+      width: 420px; height: 420px;
+      top: 8%; right: 10%;
+      background: rgba(212, 185, 106, 0.13);
+      animation: flutuar 16s ease-in-out infinite alternate;
+    }
+    .luz-2 {
+      width: 300px; height: 300px;
+      bottom: 12%; left: 6%;
+      background: rgba(184, 150, 62, 0.08);
+      animation: flutuar 20s ease-in-out infinite alternate-reverse;
+    }
+    @keyframes flutuar {
+      from { transform: translate(0, 0); }
+      to   { transform: translate(-28px, 22px); }
+    }
+    .hero-conteudo { max-width: 760px; position: relative; z-index: 2; will-change: transform, opacity; }
+    .hero h1 {
+      font-size: clamp(2.4rem, 5.5vw, 4rem);
+      font-weight: 600;
+      margin-bottom: 28px;
+      color: var(--creme);
+    }
+    .hero h1 em { font-style: italic; color: var(--dourado-claro); }
+    .hero p.sub {
+      font-size: 1.15rem;
+      color: rgba(247, 243, 236, 0.78);
+      max-width: 580px;
+      margin-bottom: 40px;
+    }
+    .hero-credencial {
+      margin-top: 28px;
+      font-size: 0.85rem;
+      color: rgba(247, 243, 236, 0.6);
+      letter-spacing: 0.06em;
+    }
+    .hero-credencial strong { color: var(--dourado-claro); }
+    /* convite para "entrar" */
+    .rolar-hint {
+      position: absolute;
+      bottom: 32px; left: 50%;
+      transform: translateX(-50%);
+      z-index: 2;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 12px;
+      font-size: 0.8rem;
+      letter-spacing: 0.28em;
+      text-transform: uppercase;
+      color: rgba(247, 243, 236, 0.8);
+      text-decoration: none;
+      transition: color 0.3s ease;
+    }
+    .rolar-hint:hover { color: var(--dourado-claro); }
+    .rolar-hint span {
+      display: block;
+      width: 1px; height: 44px;
+      background: linear-gradient(180deg, var(--dourado-claro), transparent);
+      animation: descer 2.4s ease-in-out infinite;
+    }
+    @keyframes descer {
+      0%   { transform: scaleY(0); transform-origin: top; }
+      45%  { transform: scaleY(1); transform-origin: top; }
+      55%  { transform: scaleY(1); transform-origin: bottom; }
+      100% { transform: scaleY(0); transform-origin: bottom; }
+    }
+
+    /* ============ DORES ============ */
+    .dores { background: var(--creme); }
+    .dores h2 { font-size: clamp(1.8rem, 3.5vw, 2.6rem); max-width: 640px; margin-bottom: 56px; }
+
+    .dores-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 32px;
+    }
+    .dor-card {
+      background: #fff;
+      border: 1px solid rgba(27, 42, 74, 0.08);
+      border-top: 3px solid var(--marinho);
+      border-radius: 4px;
+      padding: 36px 32px;
+      box-shadow: 0 4px 24px rgba(19, 30, 54, 0.05);
+      transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+    }
+    .dor-card:hover {
+      transform: translateY(-4px);
+      border-top-color: var(--dourado);
+      box-shadow: 0 12px 32px rgba(19, 30, 54, 0.1);
+    }
+    .dor-card h3 {
+      color: var(--marinho);
+      font-size: 1.25rem;
+      margin-bottom: 18px;
+      font-weight: 600;
+    }
+    .dor-card ul { list-style: none; }
+    .dor-card li {
+      color: var(--texto-suave);
+      padding: 7px 0;
+      font-size: 0.98rem;
+      border-bottom: 1px solid rgba(27, 42, 74, 0.07);
+    }
+    .dor-card li:last-child { border-bottom: none; }
+
+    .dores-fecho {
+      margin-top: 56px;
+      text-align: center;
+      font-family: 'Playfair Display', serif;
+      font-style: italic;
+      font-size: 1.35rem;
+      color: var(--marinho);
+    }
+
+    /* ============ INTERLÚDIOS — corredores do consultório ============ */
+    .interlude {
+      position: relative;
+      padding: 150px 0;
+      background: var(--marinho);
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .interlude-fundo {
+      position: absolute;
+      inset: -18% 0; /* sobra vertical para paralaxe + dolly */
+      background-size: cover;
+      background-position: center;
+      will-change: transform;
+    }
+    .interlude-fundo::after { /* véu marinho no lugar da opacidade baixa: a foto respira mais */
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(180deg, rgba(19, 30, 54, 0.68), rgba(19, 30, 54, 0.55) 50%, rgba(19, 30, 54, 0.68));
+    }
+    .interlude blockquote {
+      position: relative;
+      z-index: 2;
+      text-align: center;
+      font-family: 'Playfair Display', serif;
+      font-style: italic;
+      font-weight: 500;
+      font-size: clamp(1.4rem, 3vw, 2.1rem);
+      line-height: 1.4;
+      color: var(--creme);
+      max-width: 720px;
+      padding: 0 24px;
+    }
+    .interlude blockquote::after {
+      content: '';
+      display: block;
+      width: 48px; height: 1px;
+      background: var(--dourado-claro);
+      margin: 28px auto 0;
+    }
+
+    /* ============ O QUE É / NÃO É ============ */
+    .analise h2 { font-size: clamp(1.8rem, 3.5vw, 2.6rem); margin-bottom: 56px; max-width: 640px; }
+    .analise-colunas { display: grid; grid-template-columns: 1fr 1fr; gap: 48px; }
+    .analise-col h3 {
+      font-size: 1.3rem;
+      margin-bottom: 24px;
+      padding-bottom: 12px;
+      border-bottom: 2px solid var(--dourado);
+      display: inline-block;
+    }
+    .analise-col ul { list-style: none; }
+    .analise-col li {
+      padding: 12px 0 12px 32px;
+      position: relative;
+      color: var(--texto-suave);
+    }
+    .analise-col li::before {
+      position: absolute;
+      left: 0;
+      font-family: 'Playfair Display', serif;
+      font-weight: 700;
+    }
+    .col-e li::before { content: '—'; color: var(--dourado); }
+    .col-nao li::before { content: '×'; color: #B0554A; }
+
+    /* ============ COMO FUNCIONA ============ */
+    .metodo { background: var(--creme-escuro); }
+    .metodo h2 { font-size: clamp(1.8rem, 3.5vw, 2.6rem); margin-bottom: 56px; }
+    .passos { display: grid; grid-template-columns: repeat(3, 1fr); gap: 40px; }
+    .passo-numero {
+      font-family: 'Playfair Display', serif;
+      font-size: 3.2rem;
+      color: var(--dourado);
+      font-weight: 700;
+      line-height: 1;
+      margin-bottom: 16px;
+    }
+    .passo h3 { font-size: 1.2rem; margin-bottom: 12px; }
+    .passo p { color: var(--texto-suave); font-size: 0.98rem; }
+
+    /* ============ FORMATOS DE ACOMPANHAMENTO ============ */
+    .formatos { background: var(--creme); }
+    .formatos h2 { font-size: clamp(1.8rem, 3.5vw, 2.6rem); margin-bottom: 56px; max-width: 640px; }
+    .formatos-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 28px;
+      align-items: stretch;
+    }
+    .formato {
+      background: #fff;
+      border: 1px solid rgba(27, 42, 74, 0.08);
+      border-radius: 4px;
+      padding: 40px 32px;
+      display: flex;
+      flex-direction: column;
+      box-shadow: 0 4px 24px rgba(19, 30, 54, 0.05);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    .formato:hover { transform: translateY(-4px); box-shadow: 0 12px 32px rgba(19, 30, 54, 0.1); }
+    .formato.destaque { background: var(--marinho); border-color: rgba(212, 185, 106, 0.4); }
+    .formato .selo {
+      font-size: 0.72rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--dourado);
+      margin-bottom: 14px;
+      font-weight: 500;
+    }
+    .formato.destaque .selo { color: var(--dourado-claro); }
+    .formato h3 { font-size: 1.3rem; margin-bottom: 12px; }
+    .formato.destaque h3 { color: var(--creme); }
+    .formato p { color: var(--texto-suave); font-size: 0.97rem; margin-bottom: 28px; }
+    .formato.destaque p { color: rgba(247, 243, 236, 0.8); }
+    .formato .btn { margin-top: auto; text-align: center; }
+    .btn-contorno {
+      border: 1px solid var(--dourado);
+      color: var(--marinho);
+      background: transparent;
+      transition: background-color 0.3s ease, color 0.3s ease, transform 0.3s ease;
+    }
+    .btn-contorno:hover { background: var(--dourado); color: #fff; transform: translateY(-2px); }
+
+    /* ============ RECONHECIMENTO — "é para você se..." ============ */
+    .reconhece { background: var(--creme); }
+    .reconhece h2 { font-size: clamp(1.8rem, 3.5vw, 2.4rem); margin-bottom: 40px; }
+    .reconhece ul { list-style: none; max-width: 680px; }
+    .reconhece li {
+      font-size: 1.08rem;
+      color: var(--texto);
+      padding: 16px 0 16px 40px;
+      position: relative;
+      border-bottom: 1px solid rgba(27, 42, 74, 0.08);
+    }
+    .reconhece li:last-child { border-bottom: none; }
+    .reconhece li::before {
+      content: '—';
+      position: absolute;
+      left: 0;
+      color: var(--dourado);
+      font-family: 'Playfair Display', serif;
+      font-weight: 700;
+    }
+    .reconhece-fecho {
+      margin-top: 36px;
+      font-family: 'Playfair Display', serif;
+      font-style: italic;
+      font-size: 1.3rem;
+      color: var(--marinho);
+      max-width: 680px;
+    }
+
+    /* ============ SOBRE ============ */
+    .sobre-grid {
+      display: grid;
+      grid-template-columns: 380px 1fr;
+      gap: 64px;
+      align-items: center;
+    }
+    .sobre-foto {
+      aspect-ratio: 4 / 5;
+      background: var(--marinho);
+      border-radius: 4px;
+      overflow: hidden;
+      position: relative;
+      box-shadow: 16px 16px 0 var(--creme-escuro), 16px 16px 0 1px var(--dourado);
+    }
+    .sobre-foto img { width: 100%; height: 100%; object-fit: cover; }
+    /* a foto se revela como cortina abrindo — o gatilho é a seção, não o elemento
+       (um elemento 100% clipado nunca "intersecta" e o observer jamais dispararia) */
+    .cortina {
+      clip-path: inset(0 100% 0 0);
+      transition: clip-path 1.3s cubic-bezier(0.22, 1, 0.36, 1) 0.2s;
+    }
+    .cortina.visivel { clip-path: inset(0 0 0 0); }
+    @media (prefers-reduced-motion: reduce) {
+      .cortina { clip-path: none; transition: none; }
+    }
+    .sobre-foto .placeholder {
+      position: absolute; inset: 0;
+      display: flex; align-items: center; justify-content: center;
+      color: var(--dourado-claro);
+      font-family: 'Playfair Display', serif;
+      font-size: 4rem;
+    }
+    .sobre h2 { font-size: clamp(1.8rem, 3.5vw, 2.4rem); margin-bottom: 24px; }
+    .sobre p { color: var(--texto-suave); margin-bottom: 18px; }
+    .sobre .destaque-culinaria {
+      margin-top: 28px;
+      padding: 24px 28px;
+      background: var(--creme-escuro);
+      border-left: 3px solid var(--dourado);
+      font-style: italic;
+      color: var(--marinho);
+    }
+
+    /* ============ CREDENCIAIS ============ */
+    .credenciais { background: var(--marinho-profundo); text-align: center; }
+    .credenciais .eyebrow { color: var(--dourado-claro); }
+    .credenciais h2 { color: var(--creme); font-size: clamp(1.8rem, 3.5vw, 2.4rem); margin-bottom: 48px; }
+    .cred-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+      max-width: 900px;
+      margin: 0 auto;
+    }
+    .cred-item {
+      border: 1px solid rgba(212, 185, 106, 0.3);
+      border-radius: 4px;
+      padding: 32px 24px;
+    }
+    .cred-item strong {
+      display: block;
+      font-family: 'Playfair Display', serif;
+      font-size: 1.4rem;
+      color: var(--dourado-claro);
+      margin-bottom: 8px;
+    }
+    .cred-item span { color: rgba(247, 243, 236, 0.75); font-size: 0.92rem; }
+    .cred-nota { margin-top: 32px; font-size: 0.88rem; color: rgba(247, 243, 236, 0.6); }
+    .cred-nota a { color: var(--dourado-claro); }
+
+    /* ============ TRANSFORMAÇÕES ============ */
+    .mudancas h2 { font-size: clamp(1.8rem, 3.5vw, 2.4rem); margin-bottom: 56px; max-width: 640px; }
+    .mudancas-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+    .mudanca {
+      background: #fff;
+      border-radius: 4px;
+      padding: 32px 28px;
+      box-shadow: 0 4px 24px rgba(19, 30, 54, 0.06);
+      border-top: 3px solid var(--dourado);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    .mudanca:hover { transform: translateY(-4px); box-shadow: 0 10px 32px rgba(19, 30, 54, 0.1); }
+    .mudanca h3 { font-size: 1.15rem; margin-bottom: 10px; }
+    .mudanca p { color: var(--texto-suave); font-size: 0.95rem; }
+    .mudancas-nota {
+      margin-top: 40px;
+      font-size: 0.88rem;
+      color: var(--texto-suave);
+      font-style: italic;
+      max-width: 640px;
+    }
+
+    /* ============ FAQ ============ */
+    .faq { background: var(--creme-escuro); }
+    .faq h2 { font-size: clamp(1.8rem, 3.5vw, 2.4rem); margin-bottom: 48px; }
+    .faq-lista { max-width: 760px; }
+    .faq details {
+      background: var(--creme);
+      border-radius: 4px;
+      margin-bottom: 12px;
+      border: 1px solid rgba(27, 42, 74, 0.08);
+    }
+    .faq summary {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.1rem;
+      font-weight: 600;
+      color: var(--marinho);
+      padding: 22px 28px;
+      cursor: pointer;
+      list-style: none;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 16px;
+      min-height: 44px;
+    }
+    .faq summary::-webkit-details-marker { display: none; }
+    .faq summary::after {
+      content: '+';
+      font-size: 1.5rem;
+      color: var(--dourado);
+      transition: transform 0.3s ease;
+      flex-shrink: 0;
+    }
+    .faq details[open] summary::after { transform: rotate(45deg); }
+    .faq details p { padding: 0 28px 24px; color: var(--texto-suave); }
+
+    /* ============ CTA FINAL ============ */
+    .cta-final {
+      background: var(--marinho);
+      text-align: center;
+      padding: 120px 0;
+      position: relative;
+      overflow: hidden;
+    }
+    .cta-fundo { /* ele à janela, quase uma presença — se o arquivo não existir, nada aparece */
+      position: absolute;
+      inset: -18% 0;
+      background-image: url('assets/edemar-janela.jpg');
+      background-size: cover;
+      background-position: center 30%;
+      opacity: 0.16;
+      will-change: transform;
+    }
+    .cta-final .container { position: relative; z-index: 2; }
+    .cta-final h2 {
+      color: var(--creme);
+      font-size: clamp(2rem, 4.5vw, 3.2rem);
+      max-width: 700px;
+      margin: 0 auto 20px;
+    }
+    .cta-final h2 em { color: var(--dourado-claro); font-style: italic; }
+    .cta-final p { color: rgba(247, 243, 236, 0.75); margin-bottom: 40px; }
+
+    /* ============ RODAPÉ ============ */
+    .rodape {
+      background: var(--marinho-profundo);
+      padding: 40px 0;
+      text-align: center;
+      font-size: 0.85rem;
+      color: rgba(247, 243, 236, 0.55);
+    }
+    .rodape a { color: var(--dourado-claro); text-decoration: none; }
+    .rodape .logo { color: var(--creme); font-size: 1.1rem; display: inline-block; margin-bottom: 12px; }
+
+    /* ============ WHATSAPP FLUTUANTE ============ */
+    .whats-flutuante {
+      position: fixed;
+      bottom: 24px; right: 24px;
+      z-index: 90;
+      width: 56px; height: 56px;
+      border-radius: 50%;
+      background: #25D366;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.25);
+      transition: transform 0.3s ease;
+    }
+    .whats-flutuante:hover { transform: scale(1.08); }
+    .whats-flutuante svg { width: 30px; height: 30px; fill: #fff; }
+
+    /* ============ MOBILE ============ */
+    @media (max-width: 900px) {
+      section { padding: 72px 0; }
+      /* travessia curta: no polegar, segurar a tela cansa — um gesto basta */
+      .hero-wrap { height: 118svh; }
+      /* reserva o rés da tela para o "role para entrar" — sem sobrepor a credencial */
+      .hero { padding: 110px 0 150px; }
+      .rolar-hint { bottom: 18px; font-size: 0.68rem; gap: 8px; }
+      .rolar-hint span { height: 32px; }
+      .dores-grid, .passos, .cred-grid { grid-template-columns: 1fr; }
+      .analise-colunas, .mudancas-grid, .formatos-grid { grid-template-columns: 1fr; gap: 32px; }
+      .sobre-grid { grid-template-columns: 1fr; gap: 48px; }
+      .sobre-foto { max-width: 340px; margin: 0 auto; }
+      .header .btn { display: none; }
+      .logo { font-size: 0.98rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- HEADER -->
+  <header class="header" id="header">
+    <div class="container header-inner">
+      <a href="#" class="logo">Edemar Oneszko <span>|</span> Mente Fluida</a>
+      <a href="https://wa.me/5500000000000?text=Ol%C3%A1%2C%20vim%20pelo%20site%20e%20gostaria%20de%20agendar%20uma%20primeira%20sess%C3%A3o."
+         class="btn btn-primario" target="_blank" rel="noopener">Agendar sessão</a>
+    </div>
+  </header>
+
+  <!-- HERÓI -->
+  <div class="hero-wrap">
+  <section class="hero">
+    <div class="hero-fundo" aria-hidden="true">
+      <img src="assets/consultorio-hero.jpg" alt="" fetchpriority="high">
+      <!-- Se um dia houver vídeo, troque a linha acima por: -->
+      <!-- <video src="assets/consultorio-hero.mp4" autoplay muted loop playsinline poster="assets/consultorio-hero.jpg"></video> -->
+      <div class="luz luz-1"></div>
+      <div class="luz luz-2"></div>
+    </div>
+    <div class="container hero-conteudo">
+      <span class="eyebrow revelar">Psicanálise clínica · Online para todo o Brasil</span>
+      <h1 class="revelar">Seu corpo sente o que você ainda não consegue <em>dizer</em>.</h1>
+      <p class="sub revelar">O aperto no peito, o cansaço que o sono não resolve, o padrão que se repete. A psicanálise dá palavra ao que pesa — num espaço seguro, com a escuta de quem dedicou a vida a entender o que não é dito.</p>
+      <p class="hero-credencial revelar">Psicanalista credenciado · <strong>CNP 03/6188</strong> · CBO 2515.50</p>
+    </div>
+    <a class="rolar-hint" href="#formatos">
+      role para entrar
+      <span aria-hidden="true"></span>
+    </a>
+  </section>
+  </div>
+
+  <!-- FORMATOS DE ACOMPANHAMENTO -->
+  <section class="formatos" id="formatos">
+    <div class="container">
+      <span class="eyebrow revelar">Caminhos para começar</span>
+      <h2 class="revelar">Três formas de cuidar da sua mente</h2>
+      <div class="formatos-grid">
+        <div class="formato destaque revelar">
+          <span class="selo">O caminho profundo</span>
+          <h3>Sessão individual</h3>
+          <p>Psicanálise um a um, por videochamada. Sessões semanais de 50 minutos para compreender a raiz do que se repete — ansiedade, compulsões, luto, conflitos. O espaço é só seu.</p>
+          <a href="https://wa.me/5500000000000?text=Ol%C3%A1%2C%20vim%20pelo%20site%20e%20gostaria%20de%20agendar%20uma%20sess%C3%A3o%20individual."
+             class="btn btn-primario" target="_blank" rel="noopener">Agendar sessão</a>
+        </div>
+        <div class="formato revelar">
+          <span class="selo">Para quem vive no limite</span>
+          <h3>Gestão do estresse &amp; mindfulness</h3>
+          <p>Acompanhamento para quem funciona no automático: burnout, produtividade tóxica, mente que não desliga. Práticas de atenção plena com a profundidade da escuta psicanalítica.</p>
+          <a href="https://wa.me/5500000000000?text=Ol%C3%A1%2C%20vim%20pelo%20site%20e%20quero%20saber%20mais%20sobre%20o%20programa%20de%20gest%C3%A3o%20do%20estresse."
+             class="btn btn-contorno" target="_blank" rel="noopener">Quero saber mais</a>
+        </div>
+        <div class="formato revelar">
+          <span class="selo">Para equipes e empresas</span>
+          <h3>Saúde emocional no trabalho</h3>
+          <p>Palestras e programas de autoconhecimento e gestão emocional para empresas, alinhados à NR-1. Cuidar da mente de quem trabalha deixou de ser diferencial — virou norma.</p>
+          <a href="https://wa.me/5500000000000?text=Ol%C3%A1%2C%20vim%20pelo%20site%20e%20quero%20conversar%20sobre%20sa%C3%BAde%20emocional%20na%20minha%20empresa%20(NR-1)."
+             class="btn btn-contorno" target="_blank" rel="noopener">Falar sobre minha empresa</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- INTERLÚDIO 1 — a poltrona -->
+  <section class="interlude">
+    <div class="interlude-fundo" data-parallax style="background-image: url('assets/detalhe-poltrona.jpg');" aria-hidden="true"></div>
+    <blockquote class="revelar">Você não precisa saber por onde começar.<br>Só precisa começar a falar.</blockquote>
+  </section>
+
+  <!-- SOBRE -->
+  <section class="sobre" id="sobre">
+    <div class="container sobre-grid">
+      <div class="sobre-foto cortina">
+        <div class="placeholder">E.O.</div>
+        <!-- carrega o retrato se existir; senão, o monograma acima fica no lugar -->
+        <img src="assets/edemar.jpg" alt="Edemar Oneszko, psicanalista" style="position: relative; z-index: 1;" onerror="this.remove()">
+      </div>
+      <div class="revelar">
+        <span class="eyebrow">Quem escuta você</span>
+        <h2>Edemar Oneszko</h2>
+        <p>Psicanalista credenciado no Conselho Nacional de Psicanálise (CNP 03/6188), com direito a supervisão de casos — o que significa que cada atendimento é sustentado por estudo contínuo e ética fiscalizada.</p>
+        <p>Edemar trabalha com quem carrega ansiedade, compulsões, estresse e as dores que não têm nome fácil. Sua escuta une a profundidade da psicanálise a práticas de gestão emocional e mindfulness — inclusive no contexto do trabalho, onde a produtividade tóxica adoece em silêncio.</p>
+        <p class="destaque-culinaria">"O cuidado também passa pela mesa. Alimentar e ser alimentado é uma das primeiras formas de afeto que conhecemos — e a culinária, como vínculo, também cura."</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- INTERLÚDIO 2 — o divã -->
+  <section class="interlude">
+    <div class="interlude-fundo" data-parallax style="background-image: url('assets/detalhe-diva.jpg');" aria-hidden="true"></div>
+    <blockquote class="revelar">A escuta é o espaço.<br>A palavra é o caminho.</blockquote>
+  </section>
+
+  <!-- COMO FUNCIONA -->
+  <section class="metodo" id="metodo">
+    <div class="container">
+      <span class="eyebrow revelar">Como funciona</span>
+      <h2 class="revelar">Começar é mais simples do que parece</h2>
+      <div class="passos">
+        <div class="passo revelar">
+          <div class="passo-numero">1</div>
+          <h3>Uma conversa</h3>
+          <p>Você chama no WhatsApp e conta, sem compromisso, o que está vivendo. Toda conversa é sigilosa.</p>
+        </div>
+        <div class="passo revelar">
+          <div class="passo-numero">2</div>
+          <h3>Primeira sessão online</h3>
+          <p>Por videochamada, de onde você estiver. Um espaço só seu para falar — e ser escutado de verdade.</p>
+        </div>
+        <div class="passo revelar">
+          <div class="passo-numero">3</div>
+          <h3>O processo</h3>
+          <p>Sessões regulares, no seu ritmo. Aos poucos, o que pesava começa a fazer sentido — e a mudar.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- DORES -->
+  <section class="dores" id="dores">
+    <div class="container">
+      <span class="eyebrow revelar">Você se reconhece?</span>
+      <h2 class="revelar">O sofrimento tem muitos nomes. Todos merecem ser escutados.</h2>
+      <div class="dores-grid">
+        <div class="dor-card revelar">
+          <h3>O que pesa</h3>
+          <ul>
+            <li>Ansiedade e depressão</li>
+            <li>Angústia e sofrimento psíquico</li>
+            <li>Luto e perdas</li>
+            <li>Falta de sentido</li>
+            <li>Conflitos internos</li>
+          </ul>
+        </div>
+        <div class="dor-card revelar">
+          <h3>O que se repete</h3>
+          <ul>
+            <li>Padrões que voltam sempre</li>
+            <li>Uso excessivo de telas e celular</li>
+            <li>Compulsão alimentar e compras</li>
+            <li>TOC — Transtorno Obsessivo Compulsivo</li>
+            <li>Jogos de azar e apostas</li>
+          </ul>
+        </div>
+        <div class="dor-card revelar">
+          <h3>O que consome</h3>
+          <ul>
+            <li>Estresse e produtividade tóxica</li>
+            <li>Desequilíbrio entre vida e trabalho</li>
+            <li>Desorganização mental</li>
+            <li>Relacionamentos desgastados</li>
+            <li>Emoções difíceis de nomear</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- INTERLÚDIO 4 — a janela -->
+  <section class="interlude">
+    <div class="interlude-fundo" data-parallax style="background-image: url('assets/detalhe-janela.jpg');" aria-hidden="true"></div>
+    <blockquote class="revelar">Você não é fraco.<br>É a sua história pedindo para ser compreendida.</blockquote>
+  </section>
+
+  <!-- O QUE É / NÃO É -->
+  <section class="analise" id="analise">
+    <div class="container">
+      <span class="eyebrow revelar">Por que psicanálise</span>
+      <h2 class="revelar">O que a análise é — e o que ela não é</h2>
+      <div class="analise-colunas">
+        <div class="analise-col col-e revelar">
+          <h3>A análise é</h3>
+          <ul>
+            <li>Uma escuta profunda, sem julgamento</li>
+            <li>Um caminho até a raiz do que se repete — não só o sintoma</li>
+            <li>Autoconhecimento que fortalece a saúde mental</li>
+            <li>Um processo no seu ritmo, com sigilo absoluto</li>
+            <li>Acompanhada por supervisão de casos e código de ética</li>
+          </ul>
+        </div>
+        <div class="analise-col col-nao revelar">
+          <h3>A análise não é</h3>
+          <ul>
+            <li>Conselhos rápidos ou fórmulas prontas</li>
+            <li>Coaching de resultados em 30 dias</li>
+            <li>Julgamento sobre suas escolhas</li>
+            <li>Apenas para quem está "em crise"</li>
+            <li>Um sinal de fraqueza — é um ato de coragem</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- INTERLÚDIO 3 — a escultura, o porquê do nome -->
+  <section class="interlude">
+    <div class="interlude-fundo" data-parallax style="background-image: url('assets/escultura-mente-fluida.jpg');" aria-hidden="true"></div>
+    <blockquote class="revelar">Mente fluida é isso:<br>o que estava rígido volta a fluir.</blockquote>
+  </section>
+
+  <!-- TRANSFORMAÇÕES -->
+  <section class="mudancas" id="transformacoes">
+    <div class="container">
+      <span class="eyebrow revelar">O que o processo oferece</span>
+      <h2 class="revelar">O que muda quando você começa a se escutar</h2>
+      <div class="mudancas-grid">
+        <div class="mudanca revelar">
+          <h3>Lidar com as emoções</h3>
+          <p>Nomear o que você sente — e deixar de ser governado pelo que não tem nome.</p>
+        </div>
+        <div class="mudanca revelar">
+          <h3>Quebrar padrões de repetição</h3>
+          <p>Entender por que as mesmas situações voltam — e abrir espaço para escolher diferente.</p>
+        </div>
+        <div class="mudanca revelar">
+          <h3>Melhorar relacionamentos</h3>
+          <p>O que muda dentro transforma o modo de estar com o outro: em casa, no amor, no trabalho.</p>
+        </div>
+        <div class="mudanca revelar">
+          <h3>Desenvolver autoconhecimento</h3>
+          <p>Conhecer os próprios desejos, limites e histórias — a base de qualquer mudança duradoura.</p>
+        </div>
+        <div class="mudanca revelar">
+          <h3>Organizar a mente</h3>
+          <p>Menos ruído, mais clareza: equilíbrio entre vida pessoal e profissional deixa de ser slogan.</p>
+        </div>
+        <div class="mudanca revelar">
+          <h3>Valorizar o ser</h3>
+          <p>Sair da lógica da produtividade tóxica e reencontrar sentido no que você vive — não só no que produz.</p>
+        </div>
+      </div>
+      <p class="mudancas-nota revelar">Por respeito ao sigilo e ao código de ética do Conselho Nacional de Psicanálise, este site não exibe depoimentos de pacientes. O que acontece na análise pertence a quem a vive.</p>
+    </div>
+  </section>
+
+  <!-- CREDENCIAIS -->
+  <section class="credenciais">
+    <div class="container">
+      <span class="eyebrow revelar">Confiança verificável</span>
+      <h2 class="revelar">Credenciamento oficial, ética fiscalizada</h2>
+      <div class="cred-grid">
+        <div class="cred-item revelar">
+          <strong>CNP 03/6188</strong>
+          <span>Credenciado no Conselho Nacional de Psicanálise, com prova de veracidade por QR code</span>
+        </div>
+        <div class="cred-item revelar">
+          <strong>CBO 2515.50</strong>
+          <span>Profissão reconhecida pelo Ministério do Trabalho e Emprego</span>
+        </div>
+        <div class="cred-item revelar">
+          <strong>Supervisão de casos</strong>
+          <span>Atendimentos sustentados por supervisão contínua e código de ética do conselho</span>
+        </div>
+      </div>
+      <p class="cred-nota revelar">Registro verificável em <a href="https://www.conselhopsicanalise.com.br" target="_blank" rel="noopener">conselhopsicanalise.com.br</a> · Amparado pelo Decreto nº 2.208/1997 e pela LDB — Lei nº 9.394/1996</p>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section class="faq" id="faq">
+    <div class="container">
+      <span class="eyebrow revelar">Dúvidas frequentes</span>
+      <h2 class="revelar">Antes de dar o primeiro passo</h2>
+      <div class="faq-lista revelar">
+        <details>
+          <summary>Preciso estar "em crise" para procurar análise?</summary>
+          <p>Não. Muitas pessoas procuram análise para se conhecer melhor, quebrar padrões que se repetem ou atravessar uma fase de decisões. A crise não é pré-requisito — a vontade de se escutar, sim.</p>
+        </details>
+        <details>
+          <summary>O atendimento online funciona de verdade?</summary>
+          <p>Sim. A escuta psicanalítica acontece na palavra, e a videochamada preserva isso integralmente — com a vantagem de você estar num ambiente seu, confortável, em qualquer lugar do Brasil.</p>
+        </details>
+        <details>
+          <summary>Qual a frequência e a duração das sessões?</summary>
+          <p>Em geral, uma sessão semanal de cerca de 50 minutos. A frequência pode ser ajustada conforme o seu momento — isso é conversado com você, sem fórmula fechada.</p>
+        </details>
+        <details>
+          <summary>Qual a diferença entre psicanalista e psicólogo?</summary>
+          <p>São formações distintas. A psicanálise é uma profissão reconhecida (CBO 2515.50) focada na escuta do inconsciente: o que se repete, o que não é dito, a raiz do sintoma. O trabalho de Edemar é fiscalizado pelo Conselho Nacional de Psicanálise, com supervisão de casos e código de ética.</p>
+        </details>
+        <details>
+          <summary>O que eu falo nas sessões fica em sigilo?</summary>
+          <p>Absolutamente tudo. O sigilo é a base do trabalho e uma exigência do código de ética do conselho. O espaço da análise existe justamente para você poder dizer o que não diz em nenhum outro lugar.</p>
+        </details>
+      </div>
+    </div>
+  </section>
+
+  <!-- RECONHECIMENTO -->
+  <section class="reconhece" id="reconhece">
+    <div class="container">
+      <span class="eyebrow revelar">É para você se...</span>
+      <h2 class="revelar">Talvez você se reconheça aqui</h2>
+      <ul>
+        <li class="revelar">Você acorda cansado, mesmo depois de uma noite inteira de sono.</li>
+        <li class="revelar">Pega o celular "só por um minuto" e perde uma hora — de novo.</li>
+        <li class="revelar">Sente um aperto no peito que chega sem pedir licença.</li>
+        <li class="revelar">Atravessa a semana no automático — e no domingo vem o vazio.</li>
+        <li class="revelar">Repete o mesmo padrão nos relacionamentos e já percebeu.</li>
+        <li class="revelar">Já tentou mudar sozinho. Funcionou por duas semanas.</li>
+      </ul>
+      <p class="reconhece-fecho revelar">Se você se reconheceu em uma dessas frases, a conversa já começou.</p>
+    </div>
+  </section>
+
+  <!-- CTA FINAL -->
+  <section class="cta-final">
+    <div class="cta-fundo" data-parallax aria-hidden="true"></div>
+    <div class="container">
+      <h2 class="revelar">O primeiro passo não é uma sessão.<br>É <em>uma conversa</em>.</h2>
+      <p class="revelar">Chame no WhatsApp e conte o que está vivendo. Sem compromisso, com sigilo.</p>
+      <a href="https://wa.me/5500000000000?text=Ol%C3%A1%2C%20vim%20pelo%20site%20e%20gostaria%20de%20agendar%20uma%20primeira%20sess%C3%A3o."
+         class="btn btn-primario revelar" target="_blank" rel="noopener">Começar minha conversa</a>
+    </div>
+  </section>
+
+  <!-- RODAPÉ -->
+  <footer class="rodape">
+    <div class="container">
+      <span class="logo">Mente Fluida<span style="color: var(--dourado)">.</span></span>
+      <p style="font-style: italic; margin-bottom: 12px;">Seu lugar de equilíbrio.</p>
+      <p>Psicanálise com Edemar Oneszko · CNP 03/6188 · CBO 2515.50<br>
+      Registro verificável no <a href="https://www.conselhopsicanalise.com.br" target="_blank" rel="noopener">Conselho Nacional de Psicanálise</a></p>
+      <p style="margin-top: 16px;">© 2026 Mente Fluida · Edemar Oneszko. Todos os direitos reservados.</p>
+    </div>
+  </footer>
+
+  <!-- WHATSAPP FLUTUANTE -->
+  <a href="https://wa.me/5500000000000?text=Ol%C3%A1%2C%20vim%20pelo%20site%20e%20gostaria%20de%20agendar%20uma%20primeira%20sess%C3%A3o."
+     class="whats-flutuante" target="_blank" rel="noopener" aria-label="Conversar no WhatsApp">
+    <svg viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg"><path d="M16.004 3.2c-7.06 0-12.8 5.74-12.8 12.8 0 2.26.59 4.46 1.71 6.4L3.2 28.8l6.59-1.68a12.74 12.74 0 0 0 6.21 1.61h.01c7.06 0 12.79-5.74 12.79-12.8s-5.74-12.73-12.8-12.73zm0 23.39h-.01a10.6 10.6 0 0 1-5.4-1.48l-.39-.23-4.02 1.02 1.07-3.91-.25-.4a10.55 10.55 0 0 1-1.63-5.66c0-5.87 4.78-10.65 10.66-10.65 2.85 0 5.52 1.11 7.53 3.12a10.59 10.59 0 0 1 3.12 7.54c0 5.87-4.78 10.65-10.68 10.65zm5.84-7.97c-.32-.16-1.89-.93-2.18-1.04-.29-.11-.5-.16-.72.16-.21.32-.82 1.04-1.01 1.25-.19.21-.37.24-.69.08-.32-.16-1.35-.5-2.57-1.59-.95-.85-1.59-1.89-1.78-2.21-.19-.32-.02-.49.14-.65.14-.14.32-.37.48-.56.16-.19.21-.32.32-.53.11-.21.05-.4-.03-.56-.08-.16-.72-1.73-.98-2.37-.26-.62-.52-.54-.72-.55l-.61-.01c-.21 0-.56.08-.85.4-.29.32-1.12 1.09-1.12 2.66s1.15 3.09 1.31 3.3c.16.21 2.26 3.45 5.47 4.84.76.33 1.36.53 1.82.68.77.24 1.47.21 2.02.13.62-.09 1.89-.77 2.16-1.52.27-.75.27-1.39.19-1.52-.08-.13-.29-.21-.61-.37z"/></svg>
+  </a>
+
+  <script src="script.js"></script>
+</body>
+</html>
