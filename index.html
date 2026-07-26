@@ -696,8 +696,10 @@
       .analise-colunas, .mudancas-grid, .formatos-grid { grid-template-columns: 1fr; gap: 32px; }
       .sobre-grid { grid-template-columns: 1fr; gap: 48px; }
       .sobre-foto { max-width: 340px; margin: 0 auto; }
-      .header .btn { display: none; }
-      .logo { font-size: 0.98rem; }
+      /* CTA sempre visível: logo e botão encolhem para dividir a linha */
+      .logo { font-size: 0.85rem; }
+      .header .btn { padding: 10px 14px; font-size: 0.82rem; flex-shrink: 0; }
+      .header-inner { gap: 10px; }
     }
   </style>
 </head>
