@@ -1,0 +1,8 @@
+{
+  // Configuração do deploy na Cloudflare (Workers com assets estáticos)
+  "name": "mente-fluida",
+  "compatibility_date": "2026-07-01",
+  "assets": {
+    "directory": "."
+  }
+}
