@@ -1,4 +1,4 @@
-document.addEventListener('DOMContentLoaded', () => {
+﻿document.addEventListener('DOMContentLoaded', () => {
 
   const reduzMovimento = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   const ehDesktop = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
@@ -52,7 +52,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const videoHero = document.querySelector('.hero-fundo video');
   if (videoHero && window.matchMedia('(max-width: 768px)').matches) {
     const img = document.createElement('img');
-    img.src = videoHero.getAttribute('poster') || 'assets/consultorio-hero.jpg';
+    img.src = videoHero.getAttribute('poster') || 'assets/consultorio-hero.webp';
     img.alt = '';
     videoHero.replaceWith(img);
   }
